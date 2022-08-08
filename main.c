@@ -2,17 +2,12 @@
 #include "dummy.h"
 
 // Defines used to check if call is really coming from client
-#define VARIABLE_NAME L"AWbkoIZhLuIjbA"
 #define baseOperation 0x81
+#define VARIABLE_NAME L"kdhvcom"
 #define COMMAND_MAGIC baseOperation * 0x45 * 0x01
 
-/*
- *  https://www.guidgen.com
- *  https://forums.codeguru.com/showthread.php?258399-How-to-assign-GUID-into-a-constant-variable-in-C
- */
-
 // Our protocol GUID (should be different for every driver)
-EFI_GUID ProtocolGuid = { 0xa9b078da, 0x3b21, 0x479e, {0xa2, 0x47, 0xb6, 0x2a, 0xc1, 0x2b, 0x71, 0xe0} };
+EFI_GUID ProtocolGuid = { 0x84d0e622, 0x0501, 0x4f74, {0x98, 0x15, 0x49, 0x59, 0xa0, 0xf7, 0x1a, 0xb2} };
 
 // VirtualAddressMap GUID (gEfiEventVirtualAddressChangeGuid)
 EFI_GUID VirtualGuid = { 0x13FA7698, 0xC831, 0x49C7, { 0x87, 0xEA, 0x8F, 0x43, 0xFC, 0xC2, 0x51, 0x96 } };
@@ -200,7 +195,7 @@ VOID EFIAPI ExitBootServicesEvent(IN EFI_EVENT Event, IN VOID* Context) {
     // Print some text so we know it works (300iq)
     ST->ConOut->SetAttribute(ST->ConOut, EFI_WHITE | EFI_BACKGROUND_BLUE);
     ST->ConOut->ClearScreen(ST->ConOut);
-    CHAR16* str = L"Driver seems to be working as expected! Windows is booting now...\n";
+    CHAR16* str = L"Driver has been loaded. You can now boot to the Operating System....\n";
     Print(str);
     SetMem(str, 67 * sizeof(short), 0);
 }
@@ -329,10 +324,6 @@ EFI_STATUS efi_main(IN EFI_HANDLE ImageHandle, IN EFI_SYSTEM_TABLE* SystemTable)
     oQueryVariableInfo = (EFI_QUERY_VARIABLE_INFO)SetServicePointer(&RT->Hdr, (VOID**)&RT->QueryVariableInfo, (VOID**)&HookedQueryVariableInfo);
 
     // Print confirmation text
-    Print(L"\n");
-    Print(L"Modified by gian5921\n");
-    Print(L"Developed and improved by TheCruZ\n");
-    Print(L"EFI Memory by Samuel Tulach\n");
     Print(L"Driver has been loaded. You can now boot to the Operating System.\n");
     CHAR16* pos2 = L"Disable secure boot if you don't see a blue screen.\n";
     Print(pos2);
